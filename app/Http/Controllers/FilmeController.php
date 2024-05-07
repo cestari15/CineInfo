@@ -13,7 +13,7 @@ class FilmeController extends Controller
     public function cadastroFilme(FilmeFormRequest $request)
     {
         $filme = Filme::create([
-            'titulo:' => $request->titulo,
+            'titulo' => $request->titulo,
             'diretor' => $request->diretor,
             'genero' => $request->genero,
             'dt_lancamento' => $request->dt_lançamento,
