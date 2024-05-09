@@ -31,28 +31,6 @@ class FilmeController extends Controller
         ], 200);
     }
 
-    // pesquisar de filme
-    public function pesquisa(Request $request)
-    {
-        $query = Filme::query();
-        $query->where(function ($q) use ($request) {
-            $q->where('sinopse', 'like', '%' . $request->input('pesquisa') . '%')
-                ->orWhere('genero', 'like', '%' . $request->input('pesquisa') . '%');
-        })
-            ->where('titulo', 'like', '%' . $request->input('pesquisa') . '%');
-
-        $filmes = $query->get();
-        if (count($filmes) > 0) {
-            return response()->json([
-                'status' => true,
-                'data' => $filmes
-            ]);
-        }
-        return response()->json([
-            'status' => false,
-            'data' => "Nenhum resultado encontrado"
-        ]);
-    }
 
 
     //FUNÇÃO DE EXCLUIR
@@ -136,13 +114,41 @@ class FilmeController extends Controller
         ]);
     }
 
+    // Pesquisas em geral
 
+    public function pesquisar(Request $request)
+    {
+     
+        $query = Filme::query();
+       
+        $query->where(function ($q) use ($request) {
+            $q->where('sinopse', 'like', '%' . $request->input('pesquisa') . '%')
+                ->orWhere('genero', 'like', '%' .$request->input('pesquisa') . '%')
+                ->orWhere('diretor', 'like', '%' .$request->input('pesquisa') . '%')     
+                ->orWhere('classificacao', 'like', '%' .$request->input('pesquisa') . '%')    
+                ->orWhere('plataformas', 'like', '%' .$request->input('pesquisa') . '%')   
+                ->orWhere('elenco', 'like', '%' .$request->input('pesquisa') . '%')   
+                ->orWhere('titulo', 'like', '%' .$request->input('pesquisa') . '%');     
+        });
+
+        $filme = $query->get();
+        if (count($filme) > 0) {
+            return response()->json([
+                'status' => true,
+                'data' => $filme
+            ]);
+        }
+        return response()->json([
+            'status' => false,
+            'data' => "Nenhum resultado encontrado"
+        ]);
+    }
 
     
-    public function pesquisarTitulo(Request $request)
+  /*  public function pesquisarTitulo(Request $request)
     {
         $filmes = Filme::where('titulo', 'like', '%' . $request->titulo . '%')->get();
-        
+
         if (count($filmes) > 0) {
             return response()->json([
                 'status' => true,
@@ -155,9 +161,9 @@ class FilmeController extends Controller
             'message' => 'Nenhum stream foi encontrado'
         ]);
     }
+*/
 
-
-    public function pesquisarSinopse(Request $request)
+  /*  public function pesquisarSinopse(Request $request)
     {
         $filmes = Filme::where('sinopse', 'like', '%' . $request->sinopse . '%')->get();
 
@@ -173,8 +179,8 @@ class FilmeController extends Controller
             'message' => 'Nenhum Stream foi encontrado'
         ]);
     }
-
-    public function pesquisarDiretor(Request $request)
+*/
+  /*  public function pesquisarDiretor(Request $request)
     {
         $filmes = Filme::where('diretor', 'like', '%' . $request->diretor . '%')->get();
 
@@ -190,6 +196,6 @@ class FilmeController extends Controller
             'message' => 'Nenhum Stream foi encontrado'
         ]);
     }
-
+*/
     
 }
