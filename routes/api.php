@@ -12,8 +12,7 @@ route::post('filmes/cadastro', [FilmeController::class, 'cadastroFilme']);
 route::get('filmes/listagem', [filmeController::class, 'retornarTodos']);
 route::delete('filmes/delete/{id}', [filmeController::class, 'deletarFilme']);
 route::put('filmes/update', [filmeController::class, 'updateFilme']);
-route::get('filmes/pesquisar', [filmeController::class, 'pesquisar']);
-
+route::get('filmes/pesquisar/{pesquisa}', [filmeController::class, 'pesquisa']);
 
 //SERIES
 route::post('series/cadastro', [SeriesController::class, 'cadastroSerie']);

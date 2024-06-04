@@ -116,33 +116,34 @@ class FilmeController extends Controller
 
     // Pesquisas em geral
 
-    public function pesquisaFilme($pesquisa)
-    {
-     
-        $query = Filme::query();
-       
-        $query->where(function ($q) use ($pesquisa) {
-            $q->where('sinopse', 'like', '%' . $pesquisa . '%')
-                ->orWhere('genero', 'like', '%' .$pesquisa . '%')
-                ->orWhere('diretor', 'like', '%' .$pesquisa . '%')     
-                ->orWhere('classificacao', 'like', '%' .$pesquisa . '%')    
-                ->orWhere('plataformas', 'like', '%' .$pesquisa . '%')   
-                ->orWhere('elenco', 'like', '%' .$pesquisa . '%')   
-                ->orWhere('titulo', 'like', '%' .$pesquisa . '%');     
-        });
+   //Pesquisar por título/genero/diretor/sinopse
+   public function pesquisa($pesquisa)
+   {
+    
+       $query = Filme::query();
+      
+       $query->where(function ($q) use ($pesquisa) {
+           $q->where('sinopse', 'like', '%' . $pesquisa . '%')
+               ->orWhere('genero', 'like', '%' .$pesquisa . '%')
+               ->orWhere('diretor', 'like', '%' .$pesquisa . '%')     
+               ->orWhere('classificacao', 'like', '%' .$pesquisa . '%')    
+               ->orWhere('plataformas', 'like', '%' .$pesquisa . '%')   
+               ->orWhere('elenco', 'like', '%' .$pesquisa . '%')   
+               ->orWhere('titulo', 'like', '%' .$pesquisa . '%');     
+       });
 
-        $filme = $query->get();
-        if (count($filme) > 0) {
-            return response()->json([
-                'status' => true,
-                'data' => $filme
-            ]);
-        }
-        return response()->json([
-            'status' => false,
-            'data' => "Nenhum resultado encontrado"
-        ]);
-    }
+       $filme = $query->get();
+       if (count($filme) > 0) {
+           return response()->json([
+               'status' => true,
+               'data' => $filme
+           ]);
+       }
+       return response()->json([
+           'status' => false,
+           'data' => "Nenhum resultado encontrado"
+       ]);
+   }
 
 
   
